@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="estilos.css">
+        <title>Calculadora de IMC</title>
+    </head>
+    <body>
+        <h1 id="saludo"></h1>
+        <form action="CalculoIMC" method="post">
+            <label for="peso">Peso (kilogramos):</label><br>
+            <input type="number" id="peso" name="peso" step="0.01" min="0.01"><br><br>
+            <input type="submit" value="Calcular IMC">
+        </form>
+        <script>
+            // Obtener el nombre completo del usuario del parámetro de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const nombreCompleto = urlParams.get('nombreCompleto');
+
+            if (nombreCompleto) {
+                document.getElementById("saludo").textContent = "Hola " + nombreCompleto + "! Ingresa tu peso en kilogramos para calcular tu IMC.";
+            } else {
+                // Si no se encuentra el nombre completo en la URL, mostrar un mensaje genérico
+                document.getElementById("saludo").textContent = "Ingresa tu peso en kilogramos para calcular tu IMC.";
+            }
+        </script>
+    </body>
+</html>

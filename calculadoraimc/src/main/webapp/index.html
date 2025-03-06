@@ -1,25 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Calculadora de IMC</title>
+        <link rel="stylesheet" href="estilos.css">
+        <title>Calculadora de IMC - Inicio</title>
     </head>
     <body>
-        <h1>Calculadora de IMC</h1>
-        <form action="CalculoIMC" method="post">
-            <label for="nombre">Nombre completo:</label><br>
-            <input type="text" id="nombre" name="nombre"><br><br>
-            <label for="edad">Edad:</label><br>
-            <input type="number" id="edad" name="edad"><br><br>
-            <label for="sexo">Sexo:</label><br>
-            <select id="sexo" name="sexo">
-                <option value="masculino">Masculino</option>
-                <option value="femenino">Femenino</option>
-            </select><br><br>
-            <label for="estatura">Estatura (metros):</label><br>
-            <input type="number" id="estatura" name="estatura" step="0.01"><br><br>
-            <label for="peso">Peso (kilogramos):</label><br>
-            <input type="number" id="peso" name="peso" step="0.01"><br><br>
-            <input type="submit" value="Calcular IMC">
+        <h1>Bienvenido a la calculadora de IMC!</h1>
+        <form action="registro.html" method="get">
+            <input type="submit" value="Registrarse">
+        </form>
+        <br>
+        <form action="login.html" method="get">
+            <input type="submit" value="Iniciar sesion">
         </form>
     </body>
 </html>
