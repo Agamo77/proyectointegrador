@@ -33,7 +33,7 @@ public class ProcesarLogin extends HttpServlet {
                 return;
             }
 
-            // Conexión a la base de datos
+            // Conexion a la base de datos
             String url = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=IMC;encrypt=true;trustServerCertificate=true;";
             String user = "imc_connect"; // Reemplaza con tus credenciales
             String pass = "imc_connect";
@@ -46,13 +46,13 @@ public class ProcesarLogin extends HttpServlet {
                 ResultSet rs = pstmt.executeQuery();
 
                 if (rs.next()) {
-                    // Inicio de sesión exitoso
+                    // Inicio de sesion exitoso
                     HttpSession session = request.getSession();
                     session.setAttribute("usuario", usuario); // Guarda el nombre de usuario en la sesión
                     String nombreCompleto = rs.getString("nombreCompleto");
                     response.sendRedirect("calculadora.html?nombreCompleto=" + nombreCompleto); // Redirige a la página de cálculo de IMC
                 } else {
-                    // Inicio de sesión fallido
+                    // Inicio de sesion fallido
                     out.println("<!DOCTYPE html><html><head><title>Error de inicio de sesión</title></head><body><h1>Error de inicio de sesión</h1><p>El usuario o la contraseña son incorrectos. Por favor, inténtalo de nuevo.</p></body></html>");
                 }
 

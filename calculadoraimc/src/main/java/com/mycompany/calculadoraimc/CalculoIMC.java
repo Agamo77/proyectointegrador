@@ -95,7 +95,6 @@ public class CalculoIMC extends HttpServlet {
 
                 out.println("</table>");
 
-                // Botón "Calcular Otra Vez"
                 out.println("<br><button onclick=\"location.href='calculadora.html'\">Calcular Otra Vez</button>");
 
                 out.println("</body>");

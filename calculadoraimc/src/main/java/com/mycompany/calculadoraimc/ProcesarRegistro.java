@@ -34,7 +34,7 @@ public class ProcesarRegistro extends HttpServlet {
                 return; // Sale del método si el controlador no se encuentra
             }
 
-            // Conexión a la base de datos
+            // Conexion a la base de datos
             String url = "jdbc:sqlserver://localhost\\sqlexpress:1433;databaseName=IMC;encrypt=true;trustServerCertificate=true;";
             String user = "imc_connect";
             String pass = "imc_connect";

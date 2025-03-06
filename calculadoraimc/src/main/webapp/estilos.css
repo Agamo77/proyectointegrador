@@ -1,13 +1,13 @@
 body {
     font-family: sans-serif;
-    background-color: #f0f8ff; /* Azul muy claro */
+    background-color: #f0f8ff;
     color: #333;
     margin: 0;
     padding: 0;
 }
 
 h1, h2 {
-    color: #007bff; /* Azul principal */
+    color: #007bff; 
     text-align: center;
     margin-top: 20px;
 }
