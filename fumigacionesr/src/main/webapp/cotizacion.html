@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Cotización</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f9f9f9;
+        }
+        form {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        label {
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Formulario de Cotización</h2>
+    <form action="#" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" required>
+
+        <label for="correo">Correo electrónico:</label>
+        <input type="email" id="correo" name="correo" required>
+
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" required>
+
+        <label for="contacto">Medio de contacto preferido:</label>
+        <input type="text" id="contacto" name="contacto" required>
+
+        <label for="servicio">Tipo de servicio:</label>
+        <select id="servicio" name="servicio" required>
+            <option value="" disabled selected>Seleccione uno</option>
+            <option value="residencial">Residencial</option>
+            <option value="negocio">Negocio</option>
+        </select>
+
+        <label for="tamano">Tamaño aproximado de la propiedad (en metros cuadrados):</label>
+        <input type="text" id="tamano" name="tamano" required>
+
+        <label for="ubicacion">Ubicación de la propiedad:</label>
+        <input type="text" id="ubicacion" name="ubicacion" required>
+
+        <button type="submit">Enviar Cotización</button>
+    </form>
+    
+    <div style="text-align:center; margin-top: 20px;">
+    <a href="index.html">
+        <button type="button" style="padding: 10px 20px; font-size: 14px;">Regresar a inicio</button>
+    </a>
+</div>
+
+</body>
+</html>
