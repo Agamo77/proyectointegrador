@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @WebServlet("/guardarCotizacion")
 public class GuardarCotizacionServlet extends HttpServlet {
@@ -21,7 +23,7 @@ public class GuardarCotizacionServlet extends HttpServlet {
 
         try (Connection conn = obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO Cotizaciones (nombre, apellidos, correo, telefono, contacto, servicio, tamano, ubicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
+                "INSERT INTO Cotizaciones (nombre, apellidos, correo, telefono, contacto, servicio, tamano, ubicacion, fecha_solicitud) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
             stmt.setString(1, nombre);
             stmt.setString(2, apellidos);
@@ -31,6 +33,8 @@ public class GuardarCotizacionServlet extends HttpServlet {
             stmt.setString(6, servicio);
             stmt.setString(7, tamano);
             stmt.setString(8, ubicacion);
+            
+            stmt.setTimestamp(9, java.sql.Timestamp.valueOf(LocalDateTime.now()));
 
             stmt.executeUpdate();
 
