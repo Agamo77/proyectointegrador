@@ -21,7 +21,7 @@
             "fumires", "fumires"
         );
 
-        stmt = conn.prepareStatement("SELECT * FROM cotizaciones ORDER BY fecha_solicitud DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+        stmt = conn.prepareStatement("SELECT * FROM cotizaciones WHERE ubicacion IN ('Monterrey', 'Apodaca', 'Escobedo') ORDER BY fecha_solicitud DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
         stmt.setInt(1, offset);
         stmt.setInt(2, pageSize);
 
@@ -64,27 +64,54 @@
             <th>Nombre</th>
             <th>Correo</th>
             <th>Servicio</th>
-            <th>Tamaño</th> <!-- Tamaño -->
-            <th>Ubicación</th> <!-- Ubicación -->
-            <th>Teléfono</th> <!-- Teléfono -->
-            <th>Medio de Contacto</th> <!-- Medio de Contacto -->
-            <th>Fecha de Solicitud</th> <!-- Fecha de Solicitud -->
-            <th>Estatus</th> <!-- Estado -->
+            <th>Fecha</th>
+            <th>Estatus</th>
+            <th>Costo Estimado</th>
         </tr>
 
         <%
             while (rs.next()) {
                 int id = rs.getInt("id");
+                // Obtener el costo estimado calculado
+                double costoEstimado = 0;
+
+                // Obtener los datos de la tabla "costos" para realizar el cálculo
+                PreparedStatement stmtCosto = conn.prepareStatement("SELECT * FROM costos");
+                ResultSet rsCosto = stmtCosto.executeQuery();
+                if (rsCosto.next()) {
+                    double metroCuadrado = rsCosto.getDouble("metroCuadrado");
+                    double servicio = rsCosto.getDouble("servicio");
+
+                    // Obtener la ubicación de la cotización desde la tabla cotizaciones
+                    String ubicacion = rs.getString("ubicacion");
+
+                    // Solo se permite la ubicación 'Monterrey', 'Apodaca' o 'Escobedo'
+                    if (ubicacion != null && (ubicacion.equals("Monterrey") || ubicacion.equals("Apodaca") || ubicacion.equals("Escobedo"))) {
+                        // Consultar el costo de la ubicación directamente de la tabla "costos"
+                        PreparedStatement stmtUbicacionCosto = conn.prepareStatement("SELECT " + ubicacion + " FROM costos");
+                        ResultSet rsUbicacionCosto = stmtUbicacionCosto.executeQuery();
+                        double ubicacionCosto = 0;
+                        if (rsUbicacionCosto.next()) {
+                            ubicacionCosto = rsUbicacionCosto.getDouble(1); // Tomar el valor de la columna correspondiente
+                        }
+
+                        // Calcular el costo estimado
+                        double tamaño = rs.getDouble("tamano");
+                        costoEstimado = (tamaño * metroCuadrado) + servicio + ubicacionCosto;
+                    }
+                }
+
+                // Actualizar la base de datos con el nuevo costo estimado
+                PreparedStatement stmtUpdate = conn.prepareStatement("UPDATE cotizaciones SET costoEstimado = ? WHERE id = ?");
+                stmtUpdate.setDouble(1, costoEstimado);
+                stmtUpdate.setInt(2, id);
+                stmtUpdate.executeUpdate();
         %>
         <tr>
             <td><%= rs.getString("nombre") %> <%= rs.getString("apellidos") %></td>
             <td><%= rs.getString("correo") %></td>
             <td><%= rs.getString("servicio") %></td>
-            <td><%= rs.getString("tamano") %></td> <!-- Mostrar tamaño -->
-            <td><%= rs.getString("ubicacion") %></td> <!-- Mostrar ubicación -->
-            <td><%= rs.getString("telefono") %></td> <!-- Mostrar teléfono -->
-            <td><%= rs.getString("contacto") %></td> <!-- Mostrar contacto -->
-            <td><%= rs.getTimestamp("fecha_solicitud") %></td> <!-- Fecha de solicitud -->
+            <td><%= rs.getTimestamp("fecha_solicitud") %></td>
             <td>
                 <select name="estado_<%= id %>">
                     <option value="Nueva" <%= rs.getString("estado").equals("Nueva") ? "selected" : "" %>>Nueva</option>
@@ -92,6 +119,7 @@
                     <option value="Completada" <%= rs.getString("estado").equals("Completada") ? "selected" : "" %>>Completada</option>
                 </select>
             </td>
+            <td><%= costoEstimado %></td>
         </tr>
         <% } %>
     </table>
