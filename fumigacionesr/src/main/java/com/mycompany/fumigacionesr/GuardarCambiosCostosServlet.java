@@ -1,15 +1,17 @@
 package com.mycompany.fumigacionesr;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Properties;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 @WebServlet("/GuardarCambiosCostosServlet")
 public class GuardarCambiosCostosServlet extends HttpServlet {
@@ -30,12 +32,22 @@ public class GuardarCambiosCostosServlet extends HttpServlet {
             if (metroCuadrado != null && servicio != null &&
                 !metroCuadrado.isEmpty() && !servicio.isEmpty()) {
 
+                // Cargar archivo de configuración
+                Properties properties = new Properties();
+                InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
+                if (inputStream == null) {
+                    throw new RuntimeException("El archivo config.properties no se pudo encontrar.");
+                }
+                properties.load(inputStream);
+
+                // Obtener los valores de la conexión desde el archivo config.properties
+                String dbUrl = properties.getProperty("db.url");
+                String dbUsername = properties.getProperty("db.username");
+                String dbPassword = properties.getProperty("db.password");
+
                 // Establecer la conexión con la base de datos
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                conn = DriverManager.getConnection(
-                    "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=fumigaciones;encrypt=true;trustServerCertificate=true",
-                    "fumires", "fumires"
-                );
+                conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
 
                 // Crear la consulta SQL para insertar los costos
                 String sql = "INSERT INTO costos (metroCuadrado, Monterrey, Apodaca, Escobedo, SanPedro, servicio) VALUES (?, ?, ?, ?, ?, ?)";

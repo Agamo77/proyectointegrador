@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*, java.util.*, java.text.*" %>
+<%@ page import="java.sql.*, java.util.*, java.io.InputStream" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -8,11 +8,22 @@
     String successParam = request.getParameter("success");
 
     try {
+        // Cargar archivo de configuración
+        Properties properties = new Properties();
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
+        if (inputStream == null) {
+            throw new RuntimeException("El archivo config.properties no se pudo encontrar.");
+        }
+        properties.load(inputStream);
+
+        // Obtener los valores de la conexión desde el archivo config.properties
+        String dbUrl = properties.getProperty("db.url");
+        String dbUsername = properties.getProperty("db.username");
+        String dbPassword = properties.getProperty("db.password");
+
+        // Establecer la conexión a la base de datos
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        conn = DriverManager.getConnection(
-            "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=fumigaciones;encrypt=true;trustServerCertificate=true",
-            "fumires", "fumires"
-        );
+        conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
 
         // Obtener los costos actuales
         stmt = conn.prepareStatement("SELECT * FROM costos");
@@ -20,7 +31,6 @@
 
         // Verificar si existen datos en la tabla
         if (rs.next()) {
-            // Si existen datos, mostrar los campos con los valores actuales
 %>
 
 <html>
