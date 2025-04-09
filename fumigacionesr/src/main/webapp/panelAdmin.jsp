@@ -15,6 +15,10 @@
         <button type="submit">Ver Solicitudes</button>
     </form>
 </div>
+    <a href="modificarCostos.jsp">
+    <button>Modificar Costos De Referencia</button>
+</a>
+
 
 </body>
 </html>

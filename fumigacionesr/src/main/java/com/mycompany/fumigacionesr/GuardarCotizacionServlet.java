@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Properties;
+import java.io.InputStream;
 
 @WebServlet("/guardarCotizacion")
 public class GuardarCotizacionServlet extends HttpServlet {
@@ -47,9 +49,24 @@ public class GuardarCotizacionServlet extends HttpServlet {
     }
 
     private Connection obtenerConexion() throws SQLException {
-        String url = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=fumigaciones;encrypt=true;trustServerCertificate=true";
-        String usuario = "fumires"; // SQL Auth
-        String contraseña = "fumires";
-        return DriverManager.getConnection(url, usuario, contraseña);
+        // Cargar archivo de configuración
+        Properties properties = new Properties();
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
+        if (inputStream == null) {
+            throw new RuntimeException("El archivo config.properties no se pudo encontrar.");
+        }
+        try {
+            properties.load(inputStream);
+        } catch (IOException e) {
+            throw new RuntimeException("No se pudo cargar el archivo config.properties.", e);
+        }
+
+        // Obtener los valores de la conexión desde el archivo config.properties
+        String dbUrl = properties.getProperty("db.url");
+        String dbUsername = properties.getProperty("db.username");
+        String dbPassword = properties.getProperty("db.password");
+
+        // Establecer la conexión con la base de datos
+        return DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
     }
 }
