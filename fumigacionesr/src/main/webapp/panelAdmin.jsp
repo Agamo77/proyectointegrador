@@ -5,7 +5,16 @@
     <title>Panel de Administración</title>
 </head>
 <body>
-    <h1>Bienvenido al Panel de Administración</h1>
-    <p>Aquí podrás consultar las cotizaciones, eliminar registros, etc.</p>
+    <h1>Bienvenido al Panel de Administración de Fumigaciones Residenciales</h1>
+    <p>Aquí podrás consultar las cotizaciones y modificar los valores de calculo.</p>
+    
+    <h2>Panel de Administración</h2>
+
+<div style="margin-top: 20px;">
+    <form action="verSolicitudes.jsp" method="get">
+        <button type="submit">Ver Solicitudes</button>
+    </form>
+</div>
+
 </body>
 </html>
