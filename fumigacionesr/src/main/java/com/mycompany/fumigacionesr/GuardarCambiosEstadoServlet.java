@@ -43,7 +43,7 @@ public class GuardarCambiosEstadoServlet extends HttpServlet {
                 String param = paramNames.nextElement();
 
                 if (param.startsWith("estado_")) {
-                    int id = Integer.parseInt(param.substring(7)); // Extraemos ID
+                    int id = Integer.parseInt(param.substring(7)); 
                     String nuevoEstado = request.getParameter(param);
 
                     // Actualizar en base de datos
@@ -55,7 +55,7 @@ public class GuardarCambiosEstadoServlet extends HttpServlet {
                 }
             }
 
-            // Redirigir a la misma página
+            
             response.sendRedirect("verSolicitudes.jsp?success=true");
 
         } catch (Exception e) {
