@@ -23,8 +23,8 @@
         <dependency>
     <groupId>com.microsoft.sqlserver</groupId>
     <artifactId>mssql-jdbc</artifactId>
-    <version>12.8.1.jre11</version> <!-- o la versión que estés usando -->
-    <scope>compile</scope> <!-- ✅ Este es el default y DEBE estar presente -->
+    <version>12.8.1.jre11</version> 
+    <scope>compile</scope> 
 </dependency>
 
 
