@@ -101,7 +101,7 @@
 
 <%
         } else {
-            // Si no hay datos en la tabla, mostrar los campos vacíos para ingresar datos
+            
 %>
 
 <html>
