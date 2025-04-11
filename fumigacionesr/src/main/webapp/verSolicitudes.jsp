@@ -78,8 +78,8 @@
             <th>Fecha</th>
             <th>Estatus</th>
             <th>Costo Estimado</th>
-            <th>Teléfono</th> <!-- Nueva columna para el número de teléfono -->
-            <th>Ubicación</th> <!-- Nueva columna para la ubicación -->
+            <th>Teléfono</th> 
+            <th>Ubicación</th> 
         </tr>
 
         <%
@@ -124,8 +124,8 @@
                 </select>
             </td>
             <td><%= costoEstimado %></td>
-            <td><%= rs.getString("telefono") %></td> <!-- Mostrar el teléfono aquí -->
-            <td><%= rs.getString("ubicacion") %></td> <!-- Mostrar la ubicación aquí -->
+            <td><%= rs.getString("telefono") %></td> 
+            <td><%= rs.getString("ubicacion") %></td> 
         </tr>
         <% } %>
     </table>
